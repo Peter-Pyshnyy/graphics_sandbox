@@ -1,0 +1,11 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1745754431
+camera.gd::GDScript/GDScript::5249214441889043805::1745668005::0::1::::FreeLookCamera<>Camera3D<><>0<>0<><>::
+icon.svg::CompressedTexture2D/CompressedTexture2D::4791766032200595847::1745661724::1745661734::1::::<><><>0<>0<>ac25ca7a6680a8615e04a1e3c3d10295<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+main_scene.tscn::PackedScene::7424940299581187337::1745701551::0::1::::<><><>0<>0<><>::uid://4oygvk5gy558::::res://marching_cubes.gd<>uid://cg102a7im6rr6::::res://camera.gd
+marching_cubes.gd::GDScript::2065846796460057461::1745701333::0::1::::<>MeshInstance3D<><>0<>0<><>::
+marching_cubes_data.gd::GDScript/GDScript::3069407781974048471::1745677350::0::1::::MarchingCubesData<>RefCounted<><>0<>0<><>::
+README.md::TextFile/TextFile::-1::1745668005::0::1::::<><><>0<>0<><>::
+ui.gd::GDScript::6464900242570860148::1745681873::0::1::::<>Control<><>0<>0<><>::
+UI.tscn::PackedScene::6466981909388439556::1745681673::0::1::::<><><>0<>0<><>::uid://cydv7yut2uo1y::::res://ui.gd
+VoxelGrid.gd::GDScript/GDScript::1522477260646796560::1745663850::0::1::::VoxelGrid<>Resource<><>0<>0<><>::

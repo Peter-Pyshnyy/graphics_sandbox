@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd1xxgk3vj706"]
+
+[ext_resource type="Script" uid="uid://4oygvk5gy558" path="res://marching_cubes.gd" id="1_0f027"]
+[ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://camera.gd" id="1_2c62f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2c62f"]
+albedo_color = Color(1, 0.290196, 0.109804, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12571, 8.82019)
+script = ExtResource("1_2c62f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.516877, 0.441794, 0.733251, 0.0658044, -0.833503, 0.548583, 0.853527, 0.331801, 0.401746, 0, 0, 0)
+
+[node name="marching_cubes" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55766, 1.86061)
+script = ExtResource("1_0f027")
+MATERIAL = SubResource("StandardMaterial3D_2c62f")
+FLAT_SHADED = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="lbl_iso" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "ISO_LEVEL"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="slider_iso" type="HSlider" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+min_value = -5.0
+max_value = 5.0
+step = 0.2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="lbl_radius" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "RADIUS"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="slider_radius" type="HSlider" parent="Control/VBoxContainer/HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+step = 0.2
+value = 2.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="lbl_res" type="Label" parent="Control/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "RESOLUTION"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="slider_res" type="HSlider" parent="Control/VBoxContainer/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+min_value = 10.0
+max_value = 50.0
+step = 2.0
+value = 10.0
+
+[connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/slider_iso" to="marching_cubes" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer2/VBoxContainer/slider_radius" to="marching_cubes" method="_on_slider_radius_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer3/VBoxContainer/slider_res" to="marching_cubes" method="_on_slider_res_value_changed"]

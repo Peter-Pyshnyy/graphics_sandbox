@@ -1,0 +1,14 @@
+VBoxContainer
+HSlider
+Label
+HBoxContainer
+Control
+TextEdit
+MeshInstance3D
+Node3D
+Node
+WorldEnvironment
+DirectionalLight3D
+Camera3D
+SpotLight3D
+CollisionShape3D
