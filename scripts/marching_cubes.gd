@@ -100,7 +100,7 @@ func calculate_interpolation(a:Vector3, b:Vector3, voxel_grid:VoxelGrid):
 	return a+t*(b-a)
 
 
-func _on_h_slider_value_changed(value):
+func _on_slider_iso_value_changed(value):
 	ISO_LEVEL = value
 	generate()
 

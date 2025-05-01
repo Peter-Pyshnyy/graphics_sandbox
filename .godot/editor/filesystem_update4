@@ -1,1 +1,6 @@
 res://main_scene.tscn
+res://implicit_mesh_obj.tscn
+res://marching_cubes.gd
+res://scenes/main_scene.tscn
+res://scenes/implicit_mesh_obj.tscn
+res://README.md

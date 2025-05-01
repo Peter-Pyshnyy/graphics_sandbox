@@ -11,5 +11,5 @@ config_version=5
 [application]
 
 config/name="graphics_sandbox"
+run/main_scene="uid://dd1xxgk3vj706"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"

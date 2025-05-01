@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd1xxgk3vj706"]
+
+[ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
+[ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12571, 8.82019)
+script = ExtResource("1_2c62f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.516877, 0.441794, 0.733251, 0.0658044, -0.833503, 0.548583, 0.853527, 0.331801, 0.401746, 0, 0, 0)
+
+[node name="ImplicitMeshObj" parent="." instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.177499, 0.505367, 0.660892)
