@@ -13,7 +13,5 @@ script = ExtResource("1_fvmlu")
 metadata/_custom_type_script = "uid://vxq8ivejd6i3"
 
 [node name="borders_mesh" type="MeshInstance3D" parent="."]
-gi_mode = 0
-gi_lightmap_texel_scale = 0.01
 script = ExtResource("2_iyy3w")
 MATERIAL = SubResource("ShaderMaterial_m2ip3")
