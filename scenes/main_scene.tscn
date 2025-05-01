@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dd1xxgk3vj706"]
+[gd_scene load_steps=9 format=3 uid="uid://dd1xxgk3vj706"]
 
 [ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
 [ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
+[ext_resource type="PackedScene" uid="uid://dyoo5h6ae67wy" path="res://scenes/grid_box.tscn" id="3_7ykc4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pw63i"]
 sky_top_color = Color(0.988235, 0.92549, 0.788235, 1)
@@ -37,8 +38,9 @@ environment = SubResource("Environment_pu3yx")
 transform = Transform3D(-0.516877, 0.441794, 0.733251, 0.0658044, -0.833503, 0.548583, 0.853527, 0.331801, 0.401746, 0, 0, 0)
 light_energy = 2.0
 
-[node name="ImplicitMeshObj" parent="." instance=ExtResource("2_2c62f")]
+[node name="ImplicitMeshObj" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.177499, 0.505367, 0.660892)
+voxel_grid = NodePath("../GridBox")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63663, 1.27558, 0)
@@ -52,6 +54,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.42161, 1.27558, -7.98695)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.04042, 0)
 shape = SubResource("BoxShape3D_pw63i")
+
+[node name="GridBox" parent="." instance=ExtResource("3_7ykc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5636, -7.98738, 1.85513)
 
 [connection signal="mouse_entered" from="Area3D" to="Camera3D" method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_entered" from="Area3D2" to="Camera3D" method="_on_area_3d_2_mouse_entered"]

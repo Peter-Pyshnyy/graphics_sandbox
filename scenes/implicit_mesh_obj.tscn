@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://biwj3h5ab7qsc"]
+[gd_scene load_steps=4 format=3 uid="uid://biwj3h5ab7qsc"]
 
 [ext_resource type="Script" uid="uid://4oygvk5gy558" path="res://scripts/marching_cubes.gd" id="1_737ck"]
+[ext_resource type="Script" uid="uid://nemvl38ug6x5" path="res://implicit_mesh_obj.gd" id="1_857te"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlkvb"]
-albedo_color = Color(0.0117647, 0.247059, 0.388235, 1)
+albedo_color = Color(0.556863, 0.231373, 0.27451, 1)
 metallic = 1.0
 metallic_specular = 1.0
 
 [node name="ImplicitMeshObj" type="Node3D"]
+script = ExtResource("1_857te")
 
 [node name="marching_cubes" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55766, 1.86061)

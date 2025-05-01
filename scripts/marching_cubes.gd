@@ -1,17 +1,24 @@
+@tool
 extends MeshInstance3D
 
 var RESOLUTION = 10
 var offset = RESOLUTION / 2
 var RADIUS = 2.0
 var ISO_LEVEL = 0.0
+var pos
+var voxel_grid
 const TRIANGULATIONS = MarchingCubesData.TRIANGULATIONS
 const POINTS = MarchingCubesData.POINTS
 const EDGES = MarchingCubesData.EDGES
 @export var MATERIAL: Material
 @export var FLAT_SHADED: bool
+@onready var parent = $".."
+
 
 
 func _ready():
+	pos = parent.position
+	voxel_grid = parent.voxel_grid
 	generate()
 
 func sphere(x: int, y: int, z: int, r: float):
@@ -26,7 +33,7 @@ func elliptic(x: int, y: int, z: int):
 func generate():
 	print("iso level: ", ISO_LEVEL)
 	print("radius: ", RADIUS)
-	var voxel_grid = VoxelGrid.new(RESOLUTION)
+	#var voxel_grid = VoxelGrid.new(RESOLUTION)
 	
 	#create scalar field
 	for x in voxel_grid.resolution:
@@ -54,9 +61,7 @@ func generate():
 		surface_tool.set_smooth_group(-1)
 	
 	for vert in vertices:
-		surface_tool.set_color(Color.hex(0xE4FF1A)) #not working, has to be in the material
 		surface_tool.add_vertex(vert)
-		#print(vert) #3 vertices only
 	
 	surface_tool.generate_normals()
 	surface_tool.index()

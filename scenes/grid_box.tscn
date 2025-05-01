@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyoo5h6ae67wy"]
+
+[ext_resource type="Script" uid="uid://vxq8ivejd6i3" path="res://scripts/VoxelGrid.gd" id="1_fvmlu"]
+[ext_resource type="Script" uid="uid://p2pekls0k7vg" path="res://scenes/borders_mesh.gd" id="2_iyy3w"]
+[ext_resource type="Shader" uid="uid://bpd3v3t3yj7ie" path="res://scripts/grid_box.gdshader" id="3_oif4e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2ip3"]
+render_priority = 0
+shader = ExtResource("3_oif4e")
+
+[node name="GridBox" type="Node3D"]
+script = ExtResource("1_fvmlu")
+metadata/_custom_type_script = "uid://vxq8ivejd6i3"
+
+[node name="borders_mesh" type="MeshInstance3D" parent="."]
+gi_mode = 0
+gi_lightmap_texel_scale = 0.01
+script = ExtResource("2_iyy3w")
+MATERIAL = SubResource("ShaderMaterial_m2ip3")

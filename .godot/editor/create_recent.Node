@@ -1,3 +1,5 @@
+VoxelGrid
+MeshInstance3D
 CollisionShape3D
 Area3D
 WorldEnvironment
@@ -7,9 +9,7 @@ Label
 HBoxContainer
 Control
 TextEdit
-MeshInstance3D
 Node3D
 Node
 DirectionalLight3D
 Camera3D
-SpotLight3D
