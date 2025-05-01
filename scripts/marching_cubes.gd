@@ -54,7 +54,7 @@ func generate():
 		surface_tool.set_smooth_group(-1)
 	
 	for vert in vertices:
-		surface_tool.set_color(Color(1, 0, 0)) #not working
+		surface_tool.set_color(Color.hex(0xE4FF1A)) #not working, has to be in the material
 		surface_tool.add_vertex(vert)
 		#print(vert) #3 vertices only
 	

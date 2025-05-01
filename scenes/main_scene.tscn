@@ -1,7 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://dd1xxgk3vj706"]
+[gd_scene load_steps=8 format=3 uid="uid://dd1xxgk3vj706"]
 
 [ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
 [ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pw63i"]
+sky_top_color = Color(0.988235, 0.92549, 0.788235, 1)
+sky_horizon_color = Color(0.988235, 0.92549, 0.788235, 1)
+sky_cover_modulate = Color(0.988235, 0.92549, 0.788235, 1)
+ground_bottom_color = Color(0.988235, 0.92549, 0.788235, 1)
+ground_horizon_color = Color(0.988235, 0.92549, 0.788235, 1)
+
+[sub_resource type="Sky" id="Sky_7ykc4"]
+sky_material = SubResource("ProceduralSkyMaterial_pw63i")
+
+[sub_resource type="Environment" id="Environment_pu3yx"]
+background_mode = 2
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_7ykc4")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pw63i"]
+radius = 1.435
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pw63i"]
+size = Vector3(13.835, 11.1, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -9,8 +30,28 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12571, 8.82019)
 script = ExtResource("1_2c62f")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pu3yx")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.516877, 0.441794, 0.733251, 0.0658044, -0.833503, 0.548583, 0.853527, 0.331801, 0.401746, 0, 0, 0)
+light_energy = 2.0
 
 [node name="ImplicitMeshObj" parent="." instance=ExtResource("2_2c62f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.177499, 0.505367, 0.660892)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63663, 1.27558, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_pw63i")
+
+[node name="Area3D2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.42161, 1.27558, -7.98695)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.04042, 0)
+shape = SubResource("BoxShape3D_pw63i")
+
+[connection signal="mouse_entered" from="Area3D" to="Camera3D" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Area3D2" to="Camera3D" method="_on_area_3d_2_mouse_entered"]

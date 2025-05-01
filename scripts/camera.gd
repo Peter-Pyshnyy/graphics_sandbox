@@ -107,3 +107,11 @@ func _update_mouselook():
 	
 		rotate_y(deg_to_rad(-yaw))
 		rotate_object_local(Vector3(1,0,0), deg_to_rad(-pitch))
+
+
+func _on_area_3d_mouse_entered():
+	print("mouse entered")
+
+
+func _on_area_3d_2_mouse_entered():
+	print("mouse entered rect")

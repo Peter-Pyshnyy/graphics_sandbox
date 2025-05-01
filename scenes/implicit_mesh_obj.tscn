@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://4oygvk5gy558" path="res://scripts/marching_cubes.gd" id="1_737ck"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlkvb"]
-albedo_color = Color(1, 0.290196, 0.109804, 1)
+albedo_color = Color(0.0117647, 0.247059, 0.388235, 1)
 metallic = 1.0
 metallic_specular = 1.0
 
