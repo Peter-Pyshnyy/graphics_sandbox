@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyoo5h6ae67wy"]
+
+[ext_resource type="Script" uid="uid://vxq8ivejd6i3" path="res://scripts/VoxelGrid.gd" id="1_fvmlu"]
+[ext_resource type="Script" uid="uid://p2pekls0k7vg" path="res://scenes/borders_mesh.gd" id="2_iyy3w"]
+[ext_resource type="Shader" uid="uid://bpd3v3t3yj7ie" path="res://scripts/grid_box.gdshader" id="3_oif4e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2ip3"]
+render_priority = 0
+shader = ExtResource("3_oif4e")
+
+[node name="GridBox" type="Node3D"]
+script = ExtResource("1_fvmlu")
+metadata/_custom_type_script = "uid://vxq8ivejd6i3"
+
+[node name="borders_mesh" type="MeshInstance3D" parent="."]
+script = ExtResource("2_iyy3w")
+MATERIAL = SubResource("ShaderMaterial_m2ip3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchor_left = 0.802
+anchor_right = 1.0
+anchor_bottom = 0.048
+offset_left = 0.0959473
+offset_bottom = -0.104
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -223.0
+offset_bottom = 31.0
+grow_horizontal = 0
+
+[node name="lbl_iso" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "RENDER GRID"
+
+[node name="OptionButton" type="OptionButton" parent="Control/HBoxContainer"]
+layout_mode = 2
+selected = 2
+item_count = 3
+popup/item_0/text = "off"
+popup/item_0/id = 0
+popup/item_1/text = "points"
+popup/item_1/id = 1
+popup/item_2/text = "wireframe"
+popup/item_2/id = 2
+
+[connection signal="item_selected" from="Control/HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]

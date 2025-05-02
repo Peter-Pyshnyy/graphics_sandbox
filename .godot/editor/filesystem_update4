@@ -1,6 +1,7 @@
-res://main_scene.tscn
-res://implicit_mesh_obj.tscn
-res://marching_cubes.gd
 res://scenes/main_scene.tscn
+res://scripts/grid_box.gdshader
 res://scenes/implicit_mesh_obj.tscn
-res://README.md
+res://scenes/grid_box.tscn
+res://scripts/marching_cubes.gd
+res://scenes/borders_mesh.gd
+res://scripts/VoxelGrid.gd

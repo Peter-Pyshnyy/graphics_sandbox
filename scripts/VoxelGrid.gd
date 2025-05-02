@@ -1,12 +1,21 @@
-class_name VoxelGrid extends Resource
+class_name VoxelGrid extends Node3D
 
 var data: PackedFloat32Array
-var resolution: int
+var resolution: int = 10
+@onready var borders_mesh = $borders_mesh
 
-func _init(resolution: int):
-	self.resolution = resolution
+func _init():
 	self.data.resize(resolution * resolution * resolution)
 	self.data.fill(1.0)
+	print("vertex count: ", self.data.size())
+	
+
+#uses both _init and _ready, because else either self.data or borders_mesh
+#don't load in time
+func _ready():
+	#borders_mesh.gen_grid_dot_mesh()
+	borders_mesh.gen_grid_borders_mesh()
+	
 
 func read(x: int, y: int, z: int):
 	#allows to index every element
@@ -15,3 +24,13 @@ func read(x: int, y: int, z: int):
 
 func write(x: int, y: int, z: int, value: float):
 	self.data[x + self.resolution * (y + self.resolution * z)] = value
+
+
+func _on_option_button_item_selected(index):
+	match index:
+		0:
+			borders_mesh.remove_grid_mesh()
+		1:
+			borders_mesh.gen_grid_point_mesh()
+		2:
+			borders_mesh.gen_grid_borders_mesh()

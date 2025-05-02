@@ -1,16 +1,80 @@
-[gd_scene load_steps=3 format=3 uid="uid://dd1xxgk3vj706"]
+[gd_scene load_steps=10 format=3 uid="uid://dd1xxgk3vj706"]
 
 [ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
 [ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
+[ext_resource type="PackedScene" uid="uid://dyoo5h6ae67wy" path="res://scenes/grid_box.tscn" id="3_7ykc4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pw63i"]
+sky_top_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+sky_horizon_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+sky_cover_modulate = Color(0.027451, 0.0627451, 0.0745098, 1)
+ground_bottom_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+ground_horizon_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+sun_angle_max = 0.0
+
+[sub_resource type="Sky" id="Sky_7ykc4"]
+sky_material = SubResource("ProceduralSkyMaterial_pw63i")
+
+[sub_resource type="Environment" id="Environment_pu3yx"]
+background_mode = 1
+background_color = Color(0.0784314, 0.105882, 0.254902, 1)
+sky = SubResource("Sky_7ykc4")
+ambient_light_source = 2
+ambient_light_color = Color(0.988235, 0.843137, 0.678431, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 16.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ykc4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pw63i"]
+radius = 1.435
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pw63i"]
+size = Vector3(13.835, 11.1, 1)
 
 [node name="Node3D" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12571, 8.82019)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12571, 17.0253)
 script = ExtResource("1_2c62f")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.516877, 0.441794, 0.733251, 0.0658044, -0.833503, 0.548583, 0.853527, 0.331801, 0.401746, 0, 0, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pu3yx")
 
-[node name="ImplicitMeshObj" parent="." instance=ExtResource("2_2c62f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.177499, 0.505367, 0.660892)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.506401, 0.00909215, 0.86225, 0.263606, -0.950442, 0.164838, 0.821018, 0.310768, 0.478908, 2.73311, -0.170595, 0)
+light_energy = 2.0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.172951, 0.420655, -0.890583, -0.459274, 0.83433, 0.304893, 0.871295, 0.35629, 0.337494, -2.96037, 0, 0)
+light_energy = 2.0
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.861544, -0.501981, 0.0758726, -0.490903, 0.861818, 0.127609, -0.129446, 0.072695, -0.988918, -0.154603, 0, -2.44208)
+light_energy = 1.5
+sky_mode = 1
+
+[node name="ImplicitMeshObj" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.33007, 1.64838, 2.52131)
+voxel_grid = NodePath("../GridBox")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitMeshObj"]
+mesh = SubResource("BoxMesh_7ykc4")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63663, 1.27558, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_pw63i")
+
+[node name="Area3D2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.42161, 1.27558, -7.98695)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.04042, 0)
+shape = SubResource("BoxShape3D_pw63i")
+
+[node name="GridBox" parent="." instance=ExtResource("3_7ykc4")]
+
+[connection signal="mouse_entered" from="Area3D" to="Camera3D" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Area3D2" to="Camera3D" method="_on_area_3d_2_mouse_entered"]
