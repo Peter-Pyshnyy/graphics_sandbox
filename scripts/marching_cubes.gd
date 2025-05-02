@@ -9,6 +9,7 @@ var pos
 var grid_pos
 var relative_pos
 var voxel_grid
+var mouse_over = false
 const TRIANGULATIONS = MarchingCubesData.TRIANGULATIONS
 const POINTS = MarchingCubesData.POINTS
 const EDGES = MarchingCubesData.EDGES
@@ -26,6 +27,12 @@ func _ready():
 	grid_pos = voxel_grid.position
 	relative_pos = grid_pos - pos
 	generate()
+
+func _process(delta):
+	if Input.is_action_pressed("select_surface") && mouse_over:
+		mesh.surface_set_material(0, load("res://materials/implicid_obj_shadered.tres"))
+	else:
+		mesh.surface_set_material(0, load("res://materials/implicid_obj.tres"))
 
 func sphere(x: int, y: int, z: int, r: float):
 	return x*x + y*y + z*z - r*r;
@@ -120,10 +127,17 @@ func _on_slider_iso_value_changed(value):
 func _on_slider_radius_value_changed(value):
 	RADIUS = value
 	collision_shape.update_scale(value * 2)
-	print(value)
 	generate()
 
 
 func _on_slider_res_value_changed(value):
 	RESOLUTION = value
 	generate()
+
+
+func _on_area_3d_mouse_entered():
+	mouse_over = true
+
+
+func _on_area_3d_mouse_exited():
+	mouse_over = false

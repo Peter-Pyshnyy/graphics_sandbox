@@ -7,3 +7,5 @@ res://scripts/fresnel_outline.gdshader
 res://scripts/outline.gdshader
 res://scenes/implicid_mesh_CS.gd
 res://scripts/marching_cubes.gd
+res://scripts/implicit_mesh_obj.gd
+res://materials/implicid_obj_shadered.tres
