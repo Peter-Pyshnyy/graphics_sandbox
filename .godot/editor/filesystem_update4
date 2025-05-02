@@ -1,7 +1,9 @@
-res://scenes/main_scene.tscn
-res://scripts/grid_box.gdshader
 res://scenes/implicit_mesh_obj.tscn
+res://scripts/grid_box.gdshader
+res://scenes/fresnel_outline.gdshader
+res://scenes/main_scene.tscn
 res://scenes/grid_box.tscn
+res://scripts/fresnel_outline.gdshader
+res://scripts/outline.gdshader
+res://scenes/implicid_mesh_CS.gd
 res://scripts/marching_cubes.gd
-res://scenes/borders_mesh.gd
-res://scripts/VoxelGrid.gd

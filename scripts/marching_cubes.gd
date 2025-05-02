@@ -15,6 +15,8 @@ const EDGES = MarchingCubesData.EDGES
 @export var MATERIAL: Material
 @export var FLAT_SHADED: bool
 @onready var parent = $".."
+@onready var collision_shape = $"../Area3D/CollisionShape3D"
+
 
 
 
@@ -117,6 +119,8 @@ func _on_slider_iso_value_changed(value):
 
 func _on_slider_radius_value_changed(value):
 	RADIUS = value
+	collision_shape.update_scale(value * 2)
+	print(value)
 	generate()
 
 

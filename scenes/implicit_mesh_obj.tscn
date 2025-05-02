@@ -1,12 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://biwj3h5ab7qsc"]
+[gd_scene load_steps=8 format=3 uid="uid://biwj3h5ab7qsc"]
 
 [ext_resource type="Script" uid="uid://4oygvk5gy558" path="res://scripts/marching_cubes.gd" id="1_737ck"]
 [ext_resource type="Script" uid="uid://nemvl38ug6x5" path="res://scripts/implicit_mesh_obj.gd" id="1_857te"]
+[ext_resource type="Shader" uid="uid://l2fowcidvxax" path="res://scripts/outline.gdshader" id="3_mmf3c"]
+[ext_resource type="Script" uid="uid://dnfqtwlbjd88x" path="res://scenes/implicid_mesh_CS.gd" id="4_82l21"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_82l21"]
+render_priority = 1
+shader = ExtResource("3_mmf3c")
+shader_parameter/normal_threshold = 0.1
+shader_parameter/depth_threshold = 0.05
+shader_parameter/depth_artifact_correction_coef = 2.0
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlkvb"]
+next_pass = SubResource("ShaderMaterial_82l21")
 albedo_color = Color(0.663244, 0.0532739, 0.170479, 1)
 metallic = 1.0
 metallic_specular = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mmf3c"]
 
 [node name="ImplicitMeshObj" type="Node3D"]
 script = ExtResource("1_857te")
@@ -88,6 +101,13 @@ min_value = 10.0
 max_value = 50.0
 step = 2.0
 value = 10.0
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("SphereShape3D_mmf3c")
+script = ExtResource("4_82l21")
 
 [connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/slider_iso" to="marching_cubes" method="_on_slider_iso_value_changed"]
 [connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer2/VBoxContainer/slider_radius" to="marching_cubes" method="_on_slider_radius_value_changed"]
