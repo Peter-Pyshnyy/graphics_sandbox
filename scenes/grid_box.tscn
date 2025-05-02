@@ -18,16 +18,23 @@ MATERIAL = SubResource("ShaderMaterial_m2ip3")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchor_left = 0.797
+anchor_left = 0.802
 anchor_right = 1.0
-anchor_bottom = 0.062
-offset_left = -0.144043
-offset_bottom = -0.176003
+anchor_bottom = 0.048
+offset_left = 0.0959473
+offset_bottom = -0.104
 grow_horizontal = 0
-size_flags_horizontal = 8
-size_flags_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -223.0
+offset_bottom = 31.0
+grow_horizontal = 0
 
 [node name="lbl_iso" type="Label" parent="Control/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)

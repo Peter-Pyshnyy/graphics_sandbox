@@ -14,23 +14,12 @@ func get_corner_pos():
 
 func gen_grid_borders_mesh():
 	var corner_pos = get_corner_pos()
-	res_right = Vector3(resolution, 0, 0)
-	res_up = Vector3(0, resolution, 0)
-	res_forward = Vector3(0, 0, resolution)
+	# -1 because MC loops 0 to res - 1
+	res_right = Vector3(resolution - 1, 0, 0)
+	res_up = Vector3(0, resolution - 1, 0)
+	res_forward = Vector3(0, 0, resolution - 1)
 	
 	var new_mesh = ArrayMesh.new()
-	#var vertices := PackedVector3Array([
-		##back side
-		#corner_pos,
-		#corner_pos + res_right,
-		#corner_pos - res_up,
-		#corner_pos + res_right - res_up,
-		#
-		##front side
-		#corner_pos + res_forward,
-		#corner_pos + res_right + res_forward,
-		#corner_pos - res_up + res_forward,
-		#corner_pos + res_right - res_up + res_forward,])
 	
 	var vertices := PackedVector3Array([
 		#back side
