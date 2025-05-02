@@ -6,6 +6,8 @@ var offset = RESOLUTION / 2
 var RADIUS = 2.0
 var ISO_LEVEL = 0.0
 var pos
+var grid_pos
+var relative_pos
 var voxel_grid
 const TRIANGULATIONS = MarchingCubesData.TRIANGULATIONS
 const POINTS = MarchingCubesData.POINTS
@@ -19,6 +21,8 @@ const EDGES = MarchingCubesData.EDGES
 func _ready():
 	pos = parent.position
 	voxel_grid = parent.voxel_grid
+	grid_pos = voxel_grid.position
+	relative_pos = grid_pos - pos
 	generate()
 
 func sphere(x: int, y: int, z: int, r: float):
@@ -34,19 +38,19 @@ func generate():
 	print("iso level: ", ISO_LEVEL)
 	print("radius: ", RADIUS)
 	#var voxel_grid = VoxelGrid.new(RESOLUTION)
+	#var relative_pos = pos - grid_pos - Vector3(offset, offset, offset)
 	
+	print("relative position: ", relative_pos)
 	#create scalar field
 	for x in voxel_grid.resolution:
 		for y in voxel_grid.resolution:
 			for z in voxel_grid.resolution:
-				var sphere1 = sphere(x - offset, y - offset, z - offset, RADIUS)
-				var sphere2 = -sphere(x - offset - 2, y - offset - 2, z - offset - 1, RADIUS / 1.5)
-				#value -= sphere(x - offset + 5, y - offset, z - offset, RADIUS - 0.5)
-				#var value = elliptic(x - offset, y - offset, z - offset)
-				voxel_grid.write(x, y, z, max(sphere1, sphere2))
+				var sphere1 = sphere(relative_pos.x + x, relative_pos.y + y, relative_pos.z + z, RADIUS)
+				#var sphere2 = -sphere(x - offset - 2, y - offset - 2, z - offset - 1, RADIUS / 1.5)
+				voxel_grid.write(x, y, z, sphere1)
 	
 	#march cubes
-	var vertices = PackedVector3Array()
+	var vertices: PackedVector3Array
 	for x in voxel_grid.resolution - 1:
 		for y in voxel_grid.resolution - 1 :
 			for z in voxel_grid.resolution - 1:
@@ -82,7 +86,8 @@ func march_cube(x:int, y:int, z:int, voxel_grid:VoxelGrid, vertices:PackedVector
 		var pos_a = Vector3(x+p0.x, y+p0.y, z+p0.z)
 		var pos_b = Vector3(x+p1.x, y+p1.y, z+p1.z)
 		# Interpolate between these 2 points to get our mesh's vertex position
-		var position = calculate_interpolation(pos_a, pos_b, voxel_grid) - Vector3(offset, offset, offset)
+		#var position = calculate_interpolation(pos_a, pos_b, voxel_grid) - Vector3(offset, offset, offset)
+		var position = calculate_interpolation(pos_a, pos_b, voxel_grid) + relative_pos
 		# Add our new vertex to our mesh's vertces array
 		vertices.append(position)
 

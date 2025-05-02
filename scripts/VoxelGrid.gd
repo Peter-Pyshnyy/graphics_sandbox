@@ -13,6 +13,7 @@ func _init():
 #uses both _init and _ready, because else either self.data or borders_mesh
 #don't load in time
 func _ready():
+	#borders_mesh.gen_grid_dot_mesh()
 	borders_mesh.gen_grid_borders_mesh()
 	
 
@@ -23,3 +24,13 @@ func read(x: int, y: int, z: int):
 
 func write(x: int, y: int, z: int, value: float):
 	self.data[x + self.resolution * (y + self.resolution * z)] = value
+
+
+func _on_option_button_item_selected(index):
+	match index:
+		0:
+			borders_mesh.remove_grid_mesh()
+		1:
+			borders_mesh.gen_grid_point_mesh()
+		2:
+			borders_mesh.gen_grid_borders_mesh()

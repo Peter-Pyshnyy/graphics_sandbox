@@ -1,5 +1,8 @@
-VoxelGrid
+OptionButton
+MenuBar
+Control
 MeshInstance3D
+VoxelGrid
 CollisionShape3D
 Area3D
 WorldEnvironment
@@ -7,9 +10,6 @@ VBoxContainer
 HSlider
 Label
 HBoxContainer
-Control
 TextEdit
 Node3D
 Node
-DirectionalLight3D
-Camera3D
