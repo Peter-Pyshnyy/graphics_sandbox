@@ -4,7 +4,6 @@ var RESOLUTION = 10
 var offset = RESOLUTION / 2
 var RADIUS = 2.0
 var ISO_LEVEL = 0.0
-var pos
 var grid_pos
 var relative_pos
 var voxel_grid
@@ -23,10 +22,7 @@ var default_material := preload("res://materials/implicid_obj.tres")
 
 
 func _ready():
-	pos = parent.position
 	voxel_grid = parent.voxel_grid
-	grid_pos = voxel_grid.position
-	relative_pos = grid_pos - pos
 	generate()
 
 func _process(delta):
@@ -56,12 +52,7 @@ func elliptic(x: int, y: int, z: int):
 	return x*x - y*y - z*z + 1
 
 func generate():
-	print("iso level: ", ISO_LEVEL)
-	print("radius: ", RADIUS)
-	#var voxel_grid = VoxelGrid.new(RESOLUTION)
-	#var relative_pos = pos - grid_pos - Vector3(offset, offset, offset)
-	
-	print("relative position: ", relative_pos)
+	relative_pos = voxel_grid.position - parent.position
 	#create scalar field
 	for x in voxel_grid.resolution:
 		for y in voxel_grid.resolution:
@@ -130,6 +121,15 @@ func calculate_interpolation(a:Vector3, b:Vector3, voxel_grid:VoxelGrid):
 	var t = (ISO_LEVEL - val_a)/(val_b-val_a)
 	return a+t*(b-a)
 
+
+func _on_area_3d_mouse_entered():
+	mouse_over = true
+
+
+func _on_area_3d_mouse_exited():
+	mouse_over = false
+
+
 func _on_slider_iso_value_changed(value):
 	ISO_LEVEL = value
 	generate()
@@ -141,14 +141,16 @@ func _on_slider_radius_value_changed(value):
 	generate()
 
 
-func _on_slider_res_value_changed(value):
-	RESOLUTION = value
+func _on_slider_pos_x_value_changed(value):
+	parent.position.x = value
 	generate()
 
 
-func _on_area_3d_mouse_entered():
-	mouse_over = true
+func _on_slider_pos_y_value_changed(value):
+	parent.position.y = value
+	generate()
 
 
-func _on_area_3d_mouse_exited():
-	mouse_over = false
+func _on_slider_pos_z_value_changed(value):
+	parent.position.z = value
+	generate()

@@ -11,7 +11,7 @@ script/source = "extends Control
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mmf3c"]
 
-[node name="ImplicitMeshObj" type="Node3D"]
+[node name="ImplicitSurface" type="Node3D"]
 script = ExtResource("1_857te")
 
 [node name="marching_cubes" type="MeshInstance3D" parent="."]
@@ -35,38 +35,38 @@ anchor_bottom = 1.925
 offset_right = -265.0
 offset_bottom = -37.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="HBIso" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="lbl_iso" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+[node name="lbl_iso" type="Label" parent="Control/VBoxContainer/HBIso"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "ISO_LEVEL"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBIso"]
 layout_mode = 2
 alignment = 1
 
-[node name="slider_iso" type="HSlider" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="slider_iso" type="HSlider" parent="Control/VBoxContainer/HBIso/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 min_value = -5.0
 max_value = 5.0
 step = 0.2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="HBRadius" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="lbl_radius" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="lbl_radius" type="Label" parent="Control/VBoxContainer/HBRadius"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "RADIUS"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBRadius"]
 layout_mode = 2
 alignment = 1
 
-[node name="slider_radius" type="HSlider" parent="Control/VBoxContainer/HBoxContainer2/VBoxContainer"]
+[node name="slider_radius" type="HSlider" parent="Control/VBoxContainer/HBRadius/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 min_value = 1.0
@@ -74,25 +74,59 @@ max_value = 10.0
 step = 0.2
 value = 2.0
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="HBPosX" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="lbl_res" type="Label" parent="Control/VBoxContainer/HBoxContainer3"]
+[node name="lbl_res" type="Label" parent="Control/VBoxContainer/HBPosX"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "RESOLUTION"
+text = "POS X"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBPosX"]
 layout_mode = 2
 alignment = 1
 
-[node name="slider_res" type="HSlider" parent="Control/VBoxContainer/HBoxContainer3/VBoxContainer"]
+[node name="slider_pos_x" type="HSlider" parent="Control/VBoxContainer/HBPosX/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-min_value = 10.0
-max_value = 50.0
-step = 2.0
-value = 10.0
+max_value = 10.0
+step = 0.01
+
+[node name="HBPosY" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="lbl_res" type="Label" parent="Control/VBoxContainer/HBPosY"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "POS Y"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBPosY"]
+layout_mode = 2
+alignment = 1
+
+[node name="slider_pos_y" type="HSlider" parent="Control/VBoxContainer/HBPosY/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+max_value = 10.0
+step = 0.01
+
+[node name="HBPosZ" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="lbl_res" type="Label" parent="Control/VBoxContainer/HBPosZ"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "POS Z"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBPosZ"]
+layout_mode = 2
+alignment = 1
+
+[node name="slider_pos_z" type="HSlider" parent="Control/VBoxContainer/HBPosZ/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+max_value = 10.0
+step = 0.01
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -101,8 +135,10 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("SphereShape3D_mmf3c")
 script = ExtResource("4_82l21")
 
-[connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/slider_iso" to="marching_cubes" method="_on_slider_iso_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer2/VBoxContainer/slider_radius" to="marching_cubes" method="_on_slider_radius_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/HBoxContainer3/VBoxContainer/slider_res" to="marching_cubes" method="_on_slider_res_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBIso/VBoxContainer/slider_iso" to="marching_cubes" method="_on_slider_iso_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius" to="marching_cubes" method="_on_slider_radius_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBPosX/VBoxContainer/slider_pos_x" to="marching_cubes" method="_on_slider_pos_x_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBPosY/VBoxContainer/slider_pos_y" to="marching_cubes" method="_on_slider_pos_y_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z" to="marching_cubes" method="_on_slider_pos_z_value_changed"]
 [connection signal="mouse_entered" from="Area3D" to="marching_cubes" method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="marching_cubes" method="_on_area_3d_mouse_exited"]

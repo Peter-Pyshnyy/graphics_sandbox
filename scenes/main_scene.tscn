@@ -30,7 +30,7 @@ ambient_light_energy = 16.0
 [node name="Node3D" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12571, 17.0253)
+transform = Transform3D(1, 0, 0, 0, 0.93537, 0.353671, 0, -0.353671, 0.93537, 5, 8.41862, 17.9556)
 script = ExtResource("1_2c62f")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -49,18 +49,18 @@ transform = Transform3D(-0.861544, -0.501981, 0.0758726, -0.490903, 0.861818, 0.
 light_energy = 1.5
 sky_mode = 1
 
-[node name="ImplicitMeshObj" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.33007, 1.64838, 2.52131)
+[node name="ImplicitSurface" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9, 1.648, 2.521)
 voxel_grid = NodePath("../GridBox")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitMeshObj"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitSurface"]
 mesh = SubResource("BoxMesh_7ykc4")
 
-[node name="ImplicitMeshObj2" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+[node name="ImplicitSurface2" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.31772, 1.64838, 2.52131)
 voxel_grid = NodePath("../GridBox")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitMeshObj2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitSurface2"]
 mesh = SubResource("BoxMesh_7ykc4")
 
 [node name="GridBox" parent="." instance=ExtResource("3_7ykc4")]
