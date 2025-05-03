@@ -1,4 +1,3 @@
-@tool
 extends MeshInstance3D
 
 var RESOLUTION = 10
@@ -9,7 +8,6 @@ var pos
 var grid_pos
 var relative_pos
 var voxel_grid
-var mouse_over = false
 const TRIANGULATIONS = MarchingCubesData.TRIANGULATIONS
 const POINTS = MarchingCubesData.POINTS
 const EDGES = MarchingCubesData.EDGES
@@ -17,7 +15,10 @@ const EDGES = MarchingCubesData.EDGES
 @export var FLAT_SHADED: bool
 @onready var parent = $".."
 @onready var collision_shape = $"../Area3D/CollisionShape3D"
-
+var mouse_over := false
+var ready_to_select := false
+var hover_material := preload("res://materials/implicid_obj_shadered.tres")
+var default_material := preload("res://materials/implicid_obj.tres")
 
 
 
@@ -29,10 +30,21 @@ func _ready():
 	generate()
 
 func _process(delta):
-	if Input.is_action_pressed("select_surface") && mouse_over:
-		mesh.surface_set_material(0, load("res://materials/implicid_obj_shadered.tres"))
+	var is_selecting := Input.is_action_pressed("select_surface")
+	
+	#visual feedback for surface selection
+	if is_selecting && mouse_over:
+		if mesh.surface_get_material(0) != hover_material:
+			mesh.surface_set_material(0, hover_material)
+		ready_to_select = true
 	else:
-		mesh.surface_set_material(0, load("res://materials/implicid_obj.tres"))
+		if mesh.surface_get_material(0) != default_material:
+			mesh.surface_set_material(0, default_material)
+		ready_to_select = false
+
+func _input(event):
+	if event is InputEventMouseButton and event.is_pressed() and ready_to_select:
+		SelectionManager.set_selected(parent)
 
 func sphere(x: int, y: int, z: int, r: float):
 	return x*x + y*y + z*z - r*r;
@@ -117,7 +129,6 @@ func calculate_interpolation(a:Vector3, b:Vector3, voxel_grid:VoxelGrid):
 	var val_b = voxel_grid.read(b.x, b.y, b.z)
 	var t = (ISO_LEVEL - val_a)/(val_b-val_a)
 	return a+t*(b-a)
-
 
 func _on_slider_iso_value_changed(value):
 	ISO_LEVEL = value

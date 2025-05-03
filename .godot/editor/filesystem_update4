@@ -9,3 +9,6 @@ res://scenes/implicid_mesh_CS.gd
 res://scripts/marching_cubes.gd
 res://scripts/implicit_mesh_obj.gd
 res://materials/implicid_obj_shadered.tres
+res://shaders/outline.gdshader
+res://shaders/grid_box.gdshader
+res://scripts/selection_manager.gd

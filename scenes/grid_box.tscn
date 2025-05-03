@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://vxq8ivejd6i3" path="res://scripts/VoxelGrid.gd" id="1_fvmlu"]
 [ext_resource type="Script" uid="uid://p2pekls0k7vg" path="res://scenes/borders_mesh.gd" id="2_iyy3w"]
-[ext_resource type="Shader" uid="uid://bpd3v3t3yj7ie" path="res://scripts/grid_box.gdshader" id="3_oif4e"]
+[ext_resource type="Shader" uid="uid://bpd3v3t3yj7ie" path="res://shaders/grid_box.gdshader" id="3_oif4e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m2ip3"]
 render_priority = 0

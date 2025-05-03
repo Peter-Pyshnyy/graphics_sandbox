@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dd1xxgk3vj706"]
+[gd_scene load_steps=9 format=3 uid="uid://dd1xxgk3vj706"]
 
 [ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
 [ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
 [ext_resource type="PackedScene" uid="uid://dyoo5h6ae67wy" path="res://scenes/grid_box.tscn" id="3_7ykc4"]
+[ext_resource type="Script" uid="uid://eanang31w0wj" path="res://scripts/selection_manager.gd" id="4_pu3yx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pw63i"]
 sky_top_color = Color(0.027451, 0.0627451, 0.0745098, 1)
@@ -55,4 +56,14 @@ voxel_grid = NodePath("../GridBox")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitMeshObj"]
 mesh = SubResource("BoxMesh_7ykc4")
 
+[node name="ImplicitMeshObj2" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.31772, 1.64838, 2.52131)
+voxel_grid = NodePath("../GridBox")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitMeshObj2"]
+mesh = SubResource("BoxMesh_7ykc4")
+
 [node name="GridBox" parent="." instance=ExtResource("3_7ykc4")]
+
+[node name="SelectionManager" type="Node" parent="."]
+script = ExtResource("4_pu3yx")
