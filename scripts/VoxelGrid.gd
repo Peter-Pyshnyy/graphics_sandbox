@@ -3,6 +3,7 @@ class_name VoxelGrid extends Node3D
 var data: PackedFloat32Array
 var resolution: int = 10
 @onready var borders_mesh = $borders_mesh
+@onready var surface_mesh = $surface_mesh
 
 func _init():
 	self.data.resize(resolution * resolution * resolution)

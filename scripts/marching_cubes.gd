@@ -43,7 +43,8 @@ func _input(event):
 		SelectionManager.set_selected(parent)
 
 func sphere(x: int, y: int, z: int, r: float):
-	return x*x + y*y + z*z - r*r;
+	var pos = parent.position
+	return pow((pos.x - x),2) + pow((pos.y - y),2) + pow((pos.z - z),2) - r*r;
 
 func heart(x: int, y: int, z: int, r: float):
 	return pow((x*x + y*y + z*z - 1),3) - (1/5*x*x + y*y) * pow(z,3)
@@ -51,15 +52,19 @@ func heart(x: int, y: int, z: int, r: float):
 func elliptic(x: int, y: int, z: int):
 	return x*x - y*y - z*z + 1
 
+func torus(x:int, y:int, z:int, r:float):
+	var pos = parent.position - voxel_grid.position
+	return pow((7.0/2.0 - sqrt(pow((pos.x - x),2) + pow((pos.y - y),2))),2) + pow((pos.z - z),2) - r*r
+
 func generate():
 	relative_pos = voxel_grid.position - parent.position
 	#create scalar field
 	for x in voxel_grid.resolution:
 		for y in voxel_grid.resolution:
 			for z in voxel_grid.resolution:
-				var sphere1 = sphere(relative_pos.x + x, relative_pos.y + y, relative_pos.z + z, RADIUS)
-				#var sphere2 = -sphere(x - offset - 2, y - offset - 2, z - offset - 1, RADIUS / 1.5)
-				voxel_grid.write(x, y, z, sphere1)
+				var torus = torus(x, y, z, RADIUS)
+				#var sphere = sphere(x, y, z, RADIUS)
+				voxel_grid.write(x, y, z, torus)
 	
 	#march cubes
 	var vertices: PackedVector3Array
@@ -98,7 +103,6 @@ func march_cube(x:int, y:int, z:int, voxel_grid:VoxelGrid, vertices:PackedVector
 		var pos_a = Vector3(x+p0.x, y+p0.y, z+p0.z)
 		var pos_b = Vector3(x+p1.x, y+p1.y, z+p1.z)
 		# Interpolate between these 2 points to get our mesh's vertex position
-		#var position = calculate_interpolation(pos_a, pos_b, voxel_grid) - Vector3(offset, offset, offset)
 		var position = calculate_interpolation(pos_a, pos_b, voxel_grid) + relative_pos
 		# Add our new vertex to our mesh's vertces array
 		vertices.append(position)
