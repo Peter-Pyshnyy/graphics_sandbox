@@ -15,6 +15,7 @@ script/source = "extends Control
 script = ExtResource("1_857te")
 
 [node name="marching_cubes" type="MeshInstance3D" parent="."]
+visible = false
 script = ExtResource("1_737ck")
 MATERIAL = ExtResource("3_82l21")
 FLAT_SHADED = true
@@ -132,10 +133,10 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("SphereShape3D_mmf3c")
 script = ExtResource("4_82l21")
 
-[connection signal="value_changed" from="Control/VBoxContainer/HBIso/VBoxContainer/slider_iso" to="marching_cubes" method="_on_slider_iso_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius" to="marching_cubes" method="_on_slider_radius_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/HBPosX/VBoxContainer/slider_pos_x" to="marching_cubes" method="_on_slider_pos_x_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/HBPosY/VBoxContainer/slider_pos_y" to="marching_cubes" method="_on_slider_pos_y_value_changed"]
-[connection signal="value_changed" from="Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z" to="marching_cubes" method="_on_slider_pos_z_value_changed"]
-[connection signal="mouse_entered" from="Area3D" to="marching_cubes" method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="Area3D" to="marching_cubes" method="_on_area_3d_mouse_exited"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBIso/VBoxContainer/slider_iso" to="." method="_on_slider_iso_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius" to="." method="_on_slider_radius_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBPosX/VBoxContainer/slider_pos_x" to="." method="_on_slider_pos_x_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBPosY/VBoxContainer/slider_pos_y" to="." method="_on_slider_pos_y_value_changed"]
+[connection signal="value_changed" from="Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z" to="." method="_on_slider_pos_z_value_changed"]
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

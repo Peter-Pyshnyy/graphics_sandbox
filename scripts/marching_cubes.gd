@@ -30,12 +30,12 @@ func _process(delta):
 	
 	#visual feedback for surface selection
 	if is_selecting && mouse_over:
-		if mesh.surface_get_material(0) != hover_material:
-			mesh.surface_set_material(0, hover_material)
+		#if mesh.surface_get_material(0) != hover_material:
+			#mesh.surface_set_material(0, hover_material)
 		ready_to_select = true
 	else:
-		if mesh.surface_get_material(0) != default_material:
-			mesh.surface_set_material(0, default_material)
+		#if mesh.surface_get_material(0) != default_material:
+			#mesh.surface_set_material(0, default_material)
 		ready_to_select = false
 
 func _input(event):
@@ -132,29 +132,3 @@ func _on_area_3d_mouse_entered():
 
 func _on_area_3d_mouse_exited():
 	mouse_over = false
-
-
-func _on_slider_iso_value_changed(value):
-	ISO_LEVEL = value
-	generate()
-
-
-func _on_slider_radius_value_changed(value):
-	RADIUS = value
-	collision_shape.update_scale(value * 2)
-	generate()
-
-
-func _on_slider_pos_x_value_changed(value):
-	parent.position.x = value
-	generate()
-
-
-func _on_slider_pos_y_value_changed(value):
-	parent.position.y = value
-	generate()
-
-
-func _on_slider_pos_z_value_changed(value):
-	parent.position.z = value
-	generate()

@@ -8,8 +8,6 @@ var resolution: int = 10
 func _init():
 	self.data.resize(resolution * resolution * resolution)
 	self.data.fill(1.0)
-	print("vertex count: ", self.data.size())
-	
 
 #uses both _init and _ready, because else either self.data or borders_mesh
 #don't load in time

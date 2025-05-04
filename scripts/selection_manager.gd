@@ -1,6 +1,8 @@
 extends Node
 
 var selected: ImplicidSurface = null
+var hover_over: ImplicidSurface = null
+var ready_to_select: bool = false
 
 func set_selected(surface):
 	if selected == surface:

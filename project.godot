@@ -17,7 +17,7 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 [autoload]
 
 SelectionManager="*res://scripts/selection_manager.gd"
-RenderManager="*res://scripts/render_manager.gd"
+MainSceneRoot="*res://scenes/main_scene.tscn"
 
 [input]
 
