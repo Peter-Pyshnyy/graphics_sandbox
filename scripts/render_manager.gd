@@ -11,6 +11,7 @@ const POINTS = MarchingCubesData.POINTS
 const EDGES = MarchingCubesData.EDGES
 @onready var surface_mesh = $SurfaceMesh
 @onready var selected_mesh = $SelectedMesh
+@onready var selection_manager = MainSceneRoot.get_node("SelectionManager")
 @export var MATERIAL: Material
 @export var FLAT_SHADED := true
 @export var voxel_grid: VoxelGrid
@@ -27,8 +28,8 @@ func _ready():
 		surface.selection_mouse_exit.connect(_on_selection_mouse_exit.bind(surface))
 
 func _input(event):
-	if event is InputEventMouseButton and event.is_pressed() and SelectionManager.hover_over:
-		SelectionManager.set_selected(SelectionManager.hover_over)
+	if event is InputEventMouseButton and event.is_pressed() and selection_manager.hover_over:
+		selection_manager.set_selected(selection_manager.hover_over)
 
 #combines all the functions into one
 func master_function(x: int, y: int, z: int):
@@ -124,9 +125,9 @@ func calculate_interpolation(a:Vector3, b:Vector3, voxel_grid:VoxelGrid):
 	return a+t*(b-a)
 
 func _on_selection_mouse_enter(surface: ImplicidSurface):
-	SelectionManager.hover_over = surface
+	selection_manager.hover_over = surface
 	generate_mesh(surface)
 
 func _on_selection_mouse_exit(surface: ImplicidSurface):
 	selected_mesh.mesh = null
-	SelectionManager.hover_over = null
+	selection_manager.hover_over = null

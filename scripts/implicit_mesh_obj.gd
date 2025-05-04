@@ -6,6 +6,7 @@ class_name ImplicidSurface extends Node3D
 @onready var slider_pos_z: HSlider = $Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z
 @onready var collision_shape = $Area3D/CollisionShape3D
 @onready var render_manager = MainSceneRoot.get_node("RenderManager")
+@onready var selection_manager = MainSceneRoot.get_node("SelectionManager")
 
 
 @export var voxel_grid: VoxelGrid
@@ -40,7 +41,7 @@ func _process(delta):
 	#visual feedback for surface selection
 	if is_selecting && mouse_over:
 		selection_mouse_enter.emit()
-		SelectionManager.hover_over = self
+		selection_manager.hover_over = self
 
 func _sphere(x: int, y: int, z: int, r: float):
 	return pow((position.x - x),2) + pow((position.y - y),2) + pow((position.z - z),2) - r*r;

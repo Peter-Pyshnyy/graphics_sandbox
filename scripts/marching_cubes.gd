@@ -38,9 +38,9 @@ func _process(delta):
 			#mesh.surface_set_material(0, default_material)
 		ready_to_select = false
 
-func _input(event):
-	if event is InputEventMouseButton and event.is_pressed() and ready_to_select:
-		SelectionManager.set_selected(parent)
+#func _input(event):
+	#if event is InputEventMouseButton and event.is_pressed() and ready_to_select:
+		#SelectionManager.set_selected(parent)
 
 func sphere(x: int, y: int, z: int, r: float):
 	var pos = parent.position

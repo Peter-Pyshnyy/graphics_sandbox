@@ -7,3 +7,4 @@ res://scenes/implicit_mesh_obj.tscn
 res://scenes/grid_box.tscn
 res://scripts/implicit_mesh_obj.gd
 res://scripts/render_manager.gd
+res://scripts/marching_cubes.gd
