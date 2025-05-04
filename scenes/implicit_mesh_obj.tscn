@@ -1,8 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://biwj3h5ab7qsc"]
+[gd_scene load_steps=5 format=3 uid="uid://biwj3h5ab7qsc"]
 
-[ext_resource type="Script" uid="uid://4oygvk5gy558" path="res://scripts/marching_cubes.gd" id="1_737ck"]
 [ext_resource type="Script" uid="uid://nemvl38ug6x5" path="res://scripts/implicit_mesh_obj.gd" id="1_857te"]
-[ext_resource type="Material" uid="uid://dqmpoeah47pn1" path="res://materials/implicid_obj.tres" id="3_82l21"]
 [ext_resource type="Script" uid="uid://dnfqtwlbjd88x" path="res://scenes/implicid_mesh_CS.gd" id="4_82l21"]
 
 [sub_resource type="GDScript" id="GDScript_82l21"]
@@ -13,12 +11,6 @@ script/source = "extends Control
 
 [node name="ImplicitSurface" type="Node3D"]
 script = ExtResource("1_857te")
-
-[node name="marching_cubes" type="MeshInstance3D" parent="."]
-visible = false
-script = ExtResource("1_737ck")
-MATERIAL = ExtResource("3_82l21")
-FLAT_SHADED = true
 
 [node name="Control" type="Control" parent="."]
 visible = false

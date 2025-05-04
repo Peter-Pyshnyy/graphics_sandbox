@@ -11,7 +11,7 @@ const POINTS = MarchingCubesData.POINTS
 const EDGES = MarchingCubesData.EDGES
 @onready var surface_mesh = $SurfaceMesh
 @onready var selected_mesh = $SelectedMesh
-@onready var selection_manager = MainSceneRoot.get_node("SelectionManager")
+@onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
 @export var MATERIAL: Material
 @export var FLAT_SHADED := true
 @export var voxel_grid: VoxelGrid
@@ -20,7 +20,8 @@ var hover_material := preload("res://materials/implicid_obj_shadered.tres")
 var default_material := preload("res://materials/implicid_obj.tres")
 
 func _ready():
-	if voxel_grid != null:
+	print("READY:", self, " is inside tree? ", is_inside_tree())
+	if surface_mesh != null:
 		generate_mesh()
 	
 	for surface in surfaces:
@@ -43,22 +44,23 @@ func master_function(x: int, y: int, z: int):
 
 #if no parameter is passed, generates the whole mesh, otherwise only the selection
 func generate_mesh(selected_surface : ImplicidSurface = null):
-	var mesh: ArrayMesh
+	var mesh: MeshInstance3D
 	var surface_tool = SurfaceTool.new()
+	var material = Material
 	
 	#create scalar field
 	if selected_surface == null:
-		mesh = surface_mesh.mesh
-		print("mesh:", mesh)
-		surface_tool.set_material(hover_material)
+		print("called")
+		mesh = surface_mesh
+		material = default_material
 		for x in voxel_grid.resolution:
 			for y in voxel_grid.resolution:
 				for z in voxel_grid.resolution:
 					var value = master_function(x, y, z)
 					voxel_grid.write(x, y, z, value)
 	else:
-		mesh = selected_mesh.mesh
-		surface_tool.set_material(default_material)
+		mesh = selected_mesh
+		material = hover_material
 		for x in voxel_grid.resolution:
 			for y in voxel_grid.resolution:
 				for z in voxel_grid.resolution:
@@ -78,15 +80,13 @@ func generate_mesh(selected_surface : ImplicidSurface = null):
 	if FLAT_SHADED:
 		surface_tool.set_smooth_group(-1)
 	
-	print("vertex count: ", vertices.size())
-	
 	for vert in vertices:
 		surface_tool.add_vertex(vert)
 	
 	surface_tool.generate_normals()
 	surface_tool.index()
-	#surface_tool.set_material(MATERIAL)
-	mesh = surface_tool.commit()
+	surface_tool.set_material(material)
+	mesh.mesh = surface_tool.commit()
 
 func march_cube(x:int, y:int, z:int, voxel_grid:VoxelGrid, vertices:PackedVector3Array):
   # Get the correct configuration

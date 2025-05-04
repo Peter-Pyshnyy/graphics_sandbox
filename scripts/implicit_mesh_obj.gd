@@ -5,8 +5,8 @@ class_name ImplicidSurface extends Node3D
 @onready var slider_pos_y: HSlider = $Control/VBoxContainer/HBPosY/VBoxContainer/slider_pos_y
 @onready var slider_pos_z: HSlider = $Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z
 @onready var collision_shape = $Area3D/CollisionShape3D
-@onready var render_manager = MainSceneRoot.get_node("RenderManager")
-@onready var selection_manager = MainSceneRoot.get_node("SelectionManager")
+@onready var render_manager = get_tree().root.get_node("MainScene/RenderManager")
+@onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
 
 
 @export var voxel_grid: VoxelGrid
@@ -17,7 +17,7 @@ var function_map := {
 	FunctionType.ELLIPSOID: _ellipsoid,
 	FunctionType.TORUS: _torus, 
 }
-var radius := 1.0
+var radius := 2.0
 var iso := 0.0
 var mouse_over = false
 
@@ -44,7 +44,7 @@ func _process(delta):
 		selection_manager.hover_over = self
 
 func _sphere(x: int, y: int, z: int, r: float):
-	return pow((position.x - x),2) + pow((position.y - y),2) + pow((position.z - z),2) - r*r;
+	return pow((position.x - x),2) + pow((position.y - y),2) + pow((position.z - z),2) - radius*radius;
 
 #func _heart(x: int, y: int, z: int, r: float):
 	#return pow((x*x + y*y + z*z - 1),3) - (1/5*x*x + y*y) * pow(z,3)

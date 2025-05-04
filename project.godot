@@ -14,10 +14,6 @@ config/name="graphics_sandbox"
 run/main_scene="uid://dd1xxgk3vj706"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
-[autoload]
-
-MainSceneRoot="*res://scenes/main_scene.tscn"
-
 [input]
 
 select_surface={

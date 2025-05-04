@@ -29,7 +29,7 @@ ambient_light_energy = 16.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_7ykc4"]
 
-[node name="Node3D" type="Node3D"]
+[node name="MainScene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.93537, 0.353671, 0, -0.353671, 0.93537, 5, 8.41862, 17.9556)
