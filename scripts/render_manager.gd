@@ -15,6 +15,7 @@ const EDGES = MarchingCubesData.EDGES
 @export var voxel_grid: VoxelGrid
 @export var surfaces: Array[ImplicidSurface]
 var negative_surfaces: Array[int] #stores indices of negative surfaces
+var positive_surfaces: Array[int]
 var selection_meshes := {}
 var hover_material := preload("res://materials/implicid_obj_shadered.tres")
 var default_material := preload("res://materials/implicid_obj.tres")
@@ -22,8 +23,11 @@ var default_material := preload("res://materials/implicid_obj.tres")
 func _ready():
 	for i in surfaces.size():
 		generate_selection_mesh(surfaces[i])
+		surfaces[i].update_collision_shape()
 		if surfaces[i].is_negative:
 			negative_surfaces.append(i)
+		else:
+			positive_surfaces.append(i)
 	
 	generate_main_mesh()
 	
@@ -39,7 +43,7 @@ func _input(event):
 func _master_function(x: int, y: int, z: int):
 	var result: float = surfaces[0].evaluate(x, y, z)
 	#adds positive surfaces
-	for i in surfaces.size():
+	for i in positive_surfaces:
 		result = min(result, surfaces[i].evaluate(x, y, z))
 	#subtracts negative surfaces
 	for i in negative_surfaces:
@@ -120,12 +124,6 @@ func _calculate_interpolation(a:Vector3, b:Vector3, voxel_grid:VoxelGrid):
 	var t = (ISO_LEVEL - val_a)/(val_b-val_a)
 	return a+t*(b-a)
 
-func _update_collision_shape(surface: ImplicidSurface):
-	var aabb = surface.mesh.get_aabb()
-	var box_shape := BoxShape3D.new()
-	box_shape.size = aabb
-	
-
 func _on_selection_mouse_enter(surface: ImplicidSurface):
 	selected_mesh.mesh = selection_meshes[surface]
 	selection_manager.hover_over = surface
@@ -133,3 +131,7 @@ func _on_selection_mouse_enter(surface: ImplicidSurface):
 func _on_selection_mouse_exit(surface: ImplicidSurface):
 	selected_mesh.mesh = null
 	selection_manager.hover_over = null
+
+
+func get_selection_mesh(surface: ImplicidSurface) -> ArrayMesh:
+	return selection_meshes[surface]
