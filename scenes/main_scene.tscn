@@ -53,12 +53,19 @@ sky_mode = 1
 
 [node name="ImplicitSurface" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.60094, 4.65329, 2.521)
-voxel_grid = NodePath("../GridBox")
+voxel_grid = NodePath("../VoxelGrid")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitSurface"]
 mesh = SubResource("BoxMesh_7ykc4")
 
-[node name="GridBox" parent="." instance=ExtResource("3_7ykc4")]
+[node name="ImplicitSurface2" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.14573, 4.65329, 2.521)
+voxel_grid = NodePath("../VoxelGrid")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitSurface2"]
+mesh = SubResource("BoxMesh_7ykc4")
+
+[node name="VoxelGrid" parent="." instance=ExtResource("3_7ykc4")]
 
 [node name="SelectionManager" type="Node" parent="."]
 script = ExtResource("4_pu3yx")
@@ -66,8 +73,8 @@ script = ExtResource("4_pu3yx")
 [node name="RenderManager" type="Node" parent="." node_paths=PackedStringArray("voxel_grid", "surfaces")]
 script = ExtResource("5_gubc5")
 MATERIAL = ExtResource("6_rt2n2")
-voxel_grid = NodePath("../GridBox")
-surfaces = [NodePath("../ImplicitSurface")]
+voxel_grid = NodePath("../VoxelGrid")
+surfaces = [NodePath("../ImplicitSurface"), NodePath("../ImplicitSurface2")]
 
 [node name="SurfaceMesh" type="MeshInstance3D" parent="RenderManager"]
 

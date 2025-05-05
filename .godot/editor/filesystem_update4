@@ -1,10 +1,9 @@
 res://scenes/main_scene.tscn
+res://shaders/grid_box.gdshader
 res://shaders/outline.gdshader
 res://materials/implicid_obj_shadered.tres
 res://materials/implicid_obj.tres
-res://shaders/grid_box.gdshader
 res://scenes/implicit_mesh_obj.tscn
 res://scenes/grid_box.tscn
 res://scripts/implicit_mesh_obj.gd
 res://scripts/render_manager.gd
-res://scripts/marching_cubes.gd

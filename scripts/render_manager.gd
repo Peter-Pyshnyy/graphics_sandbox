@@ -20,9 +20,7 @@ var hover_material := preload("res://materials/implicid_obj_shadered.tres")
 var default_material := preload("res://materials/implicid_obj.tres")
 
 func _ready():
-	print("READY:", self, " is inside tree? ", is_inside_tree())
-	if surface_mesh != null:
-		generate_mesh()
+	generate_mesh()
 	
 	for surface in surfaces:
 		surface.selection_mouse_enter.connect(_on_selection_mouse_enter.bind(surface))
@@ -34,11 +32,12 @@ func _input(event):
 
 #combines all the functions into one
 func master_function(x: int, y: int, z: int):
-	var result: float
+	var result: float = surfaces[0].evaluate(x, y, z)
 	#adds positive surfaces
-	for surface in surfaces:
+	for i in surfaces.size():
 		#has to be min/max later + do smth with r
-		result = surface.evaluate(x, y, z, 2.0)
+		print(surfaces[i])
+		result = min(result, surfaces[i].evaluate(x, y, z))
 	return result
 	#subtracts negative surfaces
 
@@ -64,7 +63,7 @@ func generate_mesh(selected_surface : ImplicidSurface = null):
 		for x in voxel_grid.resolution:
 			for y in voxel_grid.resolution:
 				for z in voxel_grid.resolution:
-					var value = selected_surface.evaluate(x, y, z, 2.0)
+					var value = selected_surface.evaluate(x, y, z)
 					voxel_grid.write(x, y, z, value)
 	
 	#march cubes
