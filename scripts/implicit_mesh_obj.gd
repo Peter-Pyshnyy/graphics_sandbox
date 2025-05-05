@@ -9,8 +9,7 @@ class_name ImplicidSurface extends Node3D
 @onready var collision_shape = $Area3D/CollisionShape3D
 @onready var surface_mesh: MeshInstance3D = $surface_mesh
 @onready var render_manager: RenderManager = get_tree().root.get_node("MainScene/RenderManager")
-@onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
-
+@onready var selection_manager: SelectionManager = get_tree().root.get_node("MainScene/SelectionManager")
 @export var is_negative := false
 @export var voxel_grid: VoxelGrid
 enum FunctionType {SPHERE, TORUS}
@@ -24,9 +23,7 @@ var r := 2.0
 var iso := 0.0
 var mouse_over := false
 var is_selecting := false
-
-signal selection_mouse_enter()
-signal selection_mouse_exit()
+var ignore_mouse:= false
 
 func _ready():
 	slider_radius.value = r
@@ -40,21 +37,15 @@ func _ready():
 	slider_pos_y.min_value = voxel_grid.position.y
 	slider_pos_z.min_value = voxel_grid.position.z
 	function_select.selected = function_type
-	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+	#surface_mesh.position -= position
+	update_selection_mesh()
 	update_collision_shape()
 
-func _input(event):
-	if event.is_action_pressed("select_surface"):
-		is_selecting = true
-	if event.is_action_released("select_surface"):
-		is_selecting = false
-		selection_mouse_exit.emit()
-
-func _process(delta):
-	#visual feedback for surface selection
-	if is_selecting && mouse_over:
-		selection_mouse_enter.emit()
-		selection_manager.hover_over = self
+#func _process(delta):
+	##visual feedback for surface selection
+	#if is_selecting && mouse_over:
+		#selection_mouse_enter.emit()
+		#selection_manager.hover_over = self
 
 func _sphere(x: int, y: int, z: int):
 	return pow((position.x - x),2) + pow((position.y - y),2) + pow((position.z - z),2) - r*r;
@@ -69,11 +60,14 @@ func _torus(x:int, y:int, z:int):
 	return pow((7.0/2.0 - sqrt(pow((position.x - x),2) + pow((position.y - y),2))),2) + pow((position.z - z),2) - r*r
 
 func _on_area_3d_mouse_entered():
-	mouse_over = true
+	if ignore_mouse:
+		return
+	selection_manager.set_hover_over(self)
 
 func _on_area_3d_mouse_exited():
-	mouse_over = false
-	selection_mouse_exit.emit()
+	if ignore_mouse:
+		return
+	selection_manager.reset_hover()
 
 func _on_slider_iso_value_changed(value):
 	iso = value
@@ -81,8 +75,8 @@ func _on_slider_iso_value_changed(value):
 
 func _on_slider_radius_value_changed(value):
 	r = value
-	#collision_shape.update_scale(value * 2)
 	render_manager.generate_main_mesh()
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
 
 func _on_slider_pos_x_value_changed(value):
 	if value == round(position.x):
@@ -103,19 +97,19 @@ func _on_slider_pos_z_value_changed(value):
 	render_manager.generate_main_mesh()
 
 func _on_slider_radius_drag_ended(value_changed):
-	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+	update_selection_mesh()
 	update_collision_shape()
 
 func _on_slider_pos_x_drag_ended(value_changed):
-	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+	update_selection_mesh()
 
 
 func _on_slider_pos_y_drag_ended(value_changed):
-	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+	update_selection_mesh()
 
 
 func _on_slider_pos_z_drag_ended(value_changed):
-	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+	update_selection_mesh()
 
 func _on_button_pressed() -> void:
 	var half_res:int = voxel_grid.resolution / 2
@@ -139,11 +133,30 @@ func _on_option_button_item_selected(index: int) -> void:
 	render_manager.generate_main_mesh()
 	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
 
+func _disable_collision():
+	collision_shape.disabled = true
+
+func _enable_collision():
+	collision_shape.disabled = false
+	
+func update_selection_mesh():
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+
 func update_collision_shape():
 	var aabb = surface_mesh.get_aabb()
 	var box_shape := BoxShape3D.new()
 	box_shape.size = aabb.size / 5.0 #for some reason the aabb is 5 times bigger than the mesh
 	collision_shape.shape = box_shape
+
+func on_show_negatives():
+	ignore_mouse = true
+	_disable_collision()
+	on_hover()
+
+func on_hide_negatives():
+	ignore_mouse = false
+	_enable_collision()
+	on_unhover()
 
 func evaluate(x: int, y: int, z: int):
 	return function_map[function_type].call(x, y, z)

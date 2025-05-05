@@ -9,6 +9,8 @@ script/source = "extends Control
 
 [node name="ImplicitSurface" type="Node3D"]
 script = ExtResource("1_857te")
+is_negative = null
+function_type = null
 
 [node name="Control" type="Control" parent="."]
 visible = false

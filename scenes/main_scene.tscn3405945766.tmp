@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://dd1xxgk3vj706"]
+
+[ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
+[ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
+[ext_resource type="PackedScene" uid="uid://dyoo5h6ae67wy" path="res://scenes/grid_box.tscn" id="3_7ykc4"]
+[ext_resource type="Script" uid="uid://eanang31w0wj" path="res://scripts/selection_manager.gd" id="4_pu3yx"]
+[ext_resource type="Script" uid="uid://mot8u6olj1fx" path="res://scripts/render_manager.gd" id="5_gubc5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pw63i"]
+sky_top_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+sky_horizon_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+sky_cover_modulate = Color(0.027451, 0.0627451, 0.0745098, 1)
+ground_bottom_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+ground_horizon_color = Color(0.027451, 0.0627451, 0.0745098, 1)
+sun_angle_max = 0.0
+
+[sub_resource type="Sky" id="Sky_7ykc4"]
+sky_material = SubResource("ProceduralSkyMaterial_pw63i")
+
+[sub_resource type="Environment" id="Environment_pu3yx"]
+background_mode = 1
+background_color = Color(0.0784314, 0.105882, 0.254902, 1)
+sky = SubResource("Sky_7ykc4")
+ambient_light_source = 2
+ambient_light_color = Color(0.988235, 0.843137, 0.678431, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 16.0
+
+[node name="MainScene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.93537, 0.353671, 0, -0.353671, 0.93537, 5, 8.41862, 17.9556)
+script = ExtResource("1_2c62f")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pu3yx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.506401, 0.00909215, 0.86225, 0.263606, -0.950442, 0.164838, 0.821018, 0.310768, 0.478908, 2.73311, -0.170595, 0)
+light_energy = 2.0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.172951, 0.420655, -0.890583, -0.459274, 0.83433, 0.304893, 0.871295, 0.35629, 0.337494, -2.96037, 0, 0)
+light_energy = 2.0
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.861544, -0.501981, 0.0758726, -0.490903, 0.861818, 0.127609, -0.129446, 0.072695, -0.988918, -0.154603, 0, -2.44208)
+light_energy = 1.5
+sky_mode = 1
+
+[node name="ImplicitSurface" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.41149, 4.65329, 2.42806)
+is_negative = true
+voxel_grid = NodePath("../VoxelGrid")
+function_type = 1
+
+[node name="ImplicitSurface2" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.41314, 4.65329, 4.06379)
+voxel_grid = NodePath("../VoxelGrid")
+
+[node name="ImplicitSurface3" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.86053, 4.65329, 5.69711)
+voxel_grid = NodePath("../VoxelGrid")
+
+[node name="VoxelGrid" parent="." instance=ExtResource("3_7ykc4")]
+
+[node name="SelectionManager" type="Node" parent="."]
+script = ExtResource("4_pu3yx")
+
+[node name="RenderManager" type="Node" parent="." node_paths=PackedStringArray("voxel_grid", "surfaces")]
+script = ExtResource("5_gubc5")
+voxel_grid = NodePath("../VoxelGrid")
+surfaces = [NodePath("../ImplicitSurface"), NodePath("../ImplicitSurface2"), NodePath("../ImplicitSurface3")]
+
+[node name="SurfaceMesh" type="MeshInstance3D" parent="RenderManager"]
+
+[node name="SelectedMesh" type="MeshInstance3D" parent="RenderManager"]
