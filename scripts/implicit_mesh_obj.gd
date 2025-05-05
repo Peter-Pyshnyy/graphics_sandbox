@@ -5,17 +5,19 @@ class_name ImplicidSurface extends Node3D
 @onready var slider_pos_y: HSlider = $Control/VBoxContainer/HBPosY/VBoxContainer/slider_pos_y
 @onready var slider_pos_z: HSlider = $Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z
 @onready var slider_radius = $Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius
+@onready var function_select: OptionButton = $Control/VBoxContainer/HBFuncSelect/VBoxContainer/function_select
 @onready var collision_shape = $Area3D/CollisionShape3D
+@onready var surface_mesh: MeshInstance3D = $surface_mesh
 @onready var render_manager: RenderManager = get_tree().root.get_node("MainScene/RenderManager")
 @onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
 
 @export var is_negative := false
 @export var voxel_grid: VoxelGrid
-enum FunctionType {SPHERE, ELLIPSOID, TORUS}
+enum FunctionType {SPHERE, TORUS}
 @export var function_type := FunctionType.SPHERE
 var function_map := {
 	FunctionType.SPHERE: _sphere,
-	FunctionType.ELLIPSOID: _ellipsoid,
+	#FunctionType.ELLIPSOID: _ellipsoid,
 	FunctionType.TORUS: _torus, 
 }
 var r := 2.0
@@ -37,6 +39,9 @@ func _ready():
 	slider_pos_x.min_value = voxel_grid.position.x
 	slider_pos_y.min_value = voxel_grid.position.y
 	slider_pos_z.min_value = voxel_grid.position.z
+	function_select.selected = function_type
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+	update_collision_shape()
 
 func _input(event):
 	if event.is_action_pressed("select_surface"):
@@ -98,29 +103,56 @@ func _on_slider_pos_z_value_changed(value):
 	render_manager.generate_main_mesh()
 
 func _on_slider_radius_drag_ended(value_changed):
-	render_manager.generate_selection_mesh(self)
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
 	update_collision_shape()
 
 func _on_slider_pos_x_drag_ended(value_changed):
-	render_manager.generate_selection_mesh(self)
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
 
 
 func _on_slider_pos_y_drag_ended(value_changed):
-	render_manager.generate_selection_mesh(self)
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
 
 
 func _on_slider_pos_z_drag_ended(value_changed):
-	render_manager.generate_selection_mesh(self)
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
+
+func _on_button_pressed() -> void:
+	var half_res:int = voxel_grid.resolution / 2
+	position = Vector3(half_res, half_res, half_res)
+	render_manager.generate_main_mesh()
+
+func _on_cb_negative_toggled(toggled_on: bool) -> void:
+	var index = render_manager.surfaces.find(self)
+	is_negative = !is_negative
+	if is_negative:
+		render_manager.positive_surfaces.erase(index)
+		render_manager.negative_surfaces.append(index)
+	else:
+		render_manager.positive_surfaces.append(index)
+		render_manager.negative_surfaces.erase(index)
+	
+	render_manager.generate_main_mesh()
+
+func _on_option_button_item_selected(index: int) -> void:
+	function_type = index
+	render_manager.generate_main_mesh()
+	surface_mesh.mesh = render_manager.generate_selection_mesh(self)
 
 func update_collision_shape():
-	var aabb = render_manager.get_selection_mesh(self).get_aabb()
+	var aabb = surface_mesh.get_aabb()
 	var box_shape := BoxShape3D.new()
 	box_shape.size = aabb.size / 5.0 #for some reason the aabb is 5 times bigger than the mesh
 	collision_shape.shape = box_shape
 
-
 func evaluate(x: int, y: int, z: int):
 	return function_map[function_type].call(x, y, z)
+
+func on_hover():
+	surface_mesh.show()
+
+func on_unhover():
+	surface_mesh.hide()
 
 func hide_ui():
 	control.hide()

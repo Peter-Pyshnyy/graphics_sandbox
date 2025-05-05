@@ -1,8 +1,10 @@
 MeshInstance3D
+Button
+OptionButton
+CheckButton
 Node
 CollisionShape3D
 Area3D
-OptionButton
 MenuBar
 Control
 VoxelGrid
@@ -10,5 +12,3 @@ WorldEnvironment
 VBoxContainer
 HSlider
 Label
-HBoxContainer
-TextEdit

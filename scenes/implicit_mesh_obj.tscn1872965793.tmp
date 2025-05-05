@@ -38,7 +38,7 @@ text = "FUNCTION"
 layout_mode = 2
 alignment = 1
 
-[node name="function_select" type="OptionButton" parent="Control/VBoxContainer/HBFuncSelect/VBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="Control/VBoxContainer/HBFuncSelect/VBoxContainer"]
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "Sphere"
@@ -145,10 +145,7 @@ text = "CENTER"
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("4_82l21")
 
-[node name="surface_mesh" type="MeshInstance3D" parent="."]
-visible = false
-
-[connection signal="item_selected" from="Control/VBoxContainer/HBFuncSelect/VBoxContainer/function_select" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="Control/VBoxContainer/HBFuncSelect/VBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="drag_ended" from="Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius" to="." method="_on_slider_radius_drag_ended"]
 [connection signal="value_changed" from="Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius" to="." method="_on_slider_radius_value_changed"]
 [connection signal="drag_ended" from="Control/VBoxContainer/HBPosX/VBoxContainer/slider_pos_x" to="." method="_on_slider_pos_x_drag_ended"]

@@ -1,12 +1,9 @@
-res://scenes/implicit_mesh_obj.tscn
-res://shaders/grid_box.gdshader
+res://scenes/main_scene.tscn
 res://materials/implicid_obj_shadered.tres
 res://materials/implicid_obj.tres
-res://scripts/implicit_mesh_obj.gd
+res://shaders/grid_box.gdshader
+res://scenes/implicit_mesh_obj.tscn
 res://scenes/grid_box.tscn
-res://scenes/main_scene.tscn
-res://scripts/implicid_mesh_CS.gd
-res://scripts/marching_cubes_data.gd
-res://scripts/VoxelGrid.gd
-res://scripts/camera.gd
+res://scripts/implicit_mesh_obj.gd
 res://scripts/render_manager.gd
+res://scripts/selection_manager.gd
