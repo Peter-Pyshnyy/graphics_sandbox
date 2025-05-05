@@ -9,7 +9,7 @@ class_name ImplicidSurface extends Node3D
 @onready var render_manager = get_tree().root.get_node("MainScene/RenderManager")
 @onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
 
-
+@export var is_negative := false
 @export var voxel_grid: VoxelGrid
 enum FunctionType {SPHERE, ELLIPSOID, TORUS}
 @export var function_type := FunctionType.SPHERE
@@ -20,8 +20,8 @@ var function_map := {
 }
 var r := 2.0
 var iso := 0.0
-var mouse_over = false
-var is_selecting = false
+var mouse_over := false
+var is_selecting := false
 
 signal selection_mouse_enter()
 signal selection_mouse_exit()

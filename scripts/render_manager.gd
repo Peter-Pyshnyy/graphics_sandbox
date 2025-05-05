@@ -12,14 +12,17 @@ const EDGES = MarchingCubesData.EDGES
 @onready var surface_mesh = $SurfaceMesh
 @onready var selected_mesh = $SelectedMesh
 @onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
-@export var MATERIAL: Material
-@export var FLAT_SHADED := true
 @export var voxel_grid: VoxelGrid
 @export var surfaces: Array[ImplicidSurface]
+var negative_surfaces: Array[int] #stores indices of negative surfaces
 var hover_material := preload("res://materials/implicid_obj_shadered.tres")
 var default_material := preload("res://materials/implicid_obj.tres")
 
 func _ready():
+	for i in surfaces.size():
+		if surfaces[i].is_negative:
+			negative_surfaces.append(i)
+	
 	generate_mesh()
 	
 	for surface in surfaces:
@@ -35,11 +38,11 @@ func master_function(x: int, y: int, z: int):
 	var result: float = surfaces[0].evaluate(x, y, z)
 	#adds positive surfaces
 	for i in surfaces.size():
-		#has to be min/max later + do smth with r
-		print(surfaces[i])
 		result = min(result, surfaces[i].evaluate(x, y, z))
-	return result
 	#subtracts negative surfaces
+	for i in negative_surfaces:
+		result = max(result, -surfaces[i].evaluate(x, y, z))
+	return result
 
 #if no parameter is passed, generates the whole mesh, otherwise only the selection
 func generate_mesh(selected_surface : ImplicidSurface = null):
@@ -49,7 +52,6 @@ func generate_mesh(selected_surface : ImplicidSurface = null):
 	
 	#create scalar field
 	if selected_surface == null:
-		print("called")
 		mesh = surface_mesh
 		material = default_material
 		for x in voxel_grid.resolution:
@@ -75,9 +77,7 @@ func generate_mesh(selected_surface : ImplicidSurface = null):
 	
 	#create mesh surface and draw
 	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	
-	if FLAT_SHADED:
-		surface_tool.set_smooth_group(-1)
+	surface_tool.set_smooth_group(-1)
 	
 	for vert in vertices:
 		surface_tool.add_vertex(vert)

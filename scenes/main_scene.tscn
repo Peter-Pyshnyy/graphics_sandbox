@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dd1xxgk3vj706"]
+[gd_scene load_steps=9 format=3 uid="uid://dd1xxgk3vj706"]
 
 [ext_resource type="Script" uid="uid://cg102a7im6rr6" path="res://scripts/camera.gd" id="1_2c62f"]
 [ext_resource type="PackedScene" uid="uid://biwj3h5ab7qsc" path="res://scenes/implicit_mesh_obj.tscn" id="2_2c62f"]
 [ext_resource type="PackedScene" uid="uid://dyoo5h6ae67wy" path="res://scenes/grid_box.tscn" id="3_7ykc4"]
 [ext_resource type="Script" uid="uid://eanang31w0wj" path="res://scripts/selection_manager.gd" id="4_pu3yx"]
 [ext_resource type="Script" uid="uid://mot8u6olj1fx" path="res://scripts/render_manager.gd" id="5_gubc5"]
-[ext_resource type="Material" uid="uid://dqmpoeah47pn1" path="res://materials/implicid_obj.tres" id="6_rt2n2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pw63i"]
 sky_top_color = Color(0.027451, 0.0627451, 0.0745098, 1)
@@ -26,8 +25,6 @@ ambient_light_source = 2
 ambient_light_color = Color(0.988235, 0.843137, 0.678431, 1)
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 16.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_7ykc4"]
 
 [node name="MainScene" type="Node3D"]
 
@@ -53,17 +50,13 @@ sky_mode = 1
 
 [node name="ImplicitSurface" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.60094, 4.65329, 2.521)
+is_negative = true
 voxel_grid = NodePath("../VoxelGrid")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitSurface"]
-mesh = SubResource("BoxMesh_7ykc4")
+function_type = 2
 
 [node name="ImplicitSurface2" parent="." node_paths=PackedStringArray("voxel_grid") instance=ExtResource("2_2c62f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.14573, 4.65329, 2.521)
 voxel_grid = NodePath("../VoxelGrid")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ImplicitSurface2"]
-mesh = SubResource("BoxMesh_7ykc4")
 
 [node name="VoxelGrid" parent="." instance=ExtResource("3_7ykc4")]
 
@@ -72,7 +65,6 @@ script = ExtResource("4_pu3yx")
 
 [node name="RenderManager" type="Node" parent="." node_paths=PackedStringArray("voxel_grid", "surfaces")]
 script = ExtResource("5_gubc5")
-MATERIAL = ExtResource("6_rt2n2")
 voxel_grid = NodePath("../VoxelGrid")
 surfaces = [NodePath("../ImplicitSurface"), NodePath("../ImplicitSurface2")]
 
