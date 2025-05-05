@@ -9,3 +9,4 @@ res://scripts/implicid_mesh_CS.gd
 res://scripts/marching_cubes_data.gd
 res://scripts/VoxelGrid.gd
 res://scripts/camera.gd
+res://scripts/render_manager.gd

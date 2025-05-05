@@ -6,7 +6,7 @@ class_name ImplicidSurface extends Node3D
 @onready var slider_pos_z: HSlider = $Control/VBoxContainer/HBPosZ/VBoxContainer/slider_pos_z
 @onready var slider_radius = $Control/VBoxContainer/HBRadius/VBoxContainer/slider_radius
 @onready var collision_shape = $Area3D/CollisionShape3D
-@onready var render_manager = get_tree().root.get_node("MainScene/RenderManager")
+@onready var render_manager: RenderManager = get_tree().root.get_node("MainScene/RenderManager")
 @onready var selection_manager = get_tree().root.get_node("MainScene/SelectionManager")
 
 @export var is_negative := false
@@ -77,25 +77,43 @@ func _on_slider_iso_value_changed(value):
 func _on_slider_radius_value_changed(value):
 	r = value
 	collision_shape.update_scale(value * 2)
-	render_manager.generate_mesh()
+	render_manager.generate_main_mesh()
 
 func _on_slider_pos_x_value_changed(value):
 	if value == round(position.x):
 		return
 	position.x = value
-	render_manager.generate_mesh()
+	render_manager.generate_main_mesh()
 
 func _on_slider_pos_y_value_changed(value):
 	if value == round(position.y):
 		return
 	position.y = value
-	render_manager.generate_mesh()
+	render_manager.generate_main_mesh()
 
 func _on_slider_pos_z_value_changed(value):
 	if value == round(position.z):
 		return
 	position.z = value
-	render_manager.generate_mesh()
+	render_manager.generate_main_mesh()
+
+func _on_slider_radius_drag_ended(value_changed):
+	render_manager.generate_selection_mesh(self)
+
+func _on_slider_pos_x_drag_ended(value_changed):
+	render_manager.generate_selection_mesh(self)
+
+
+func _on_slider_pos_y_drag_ended(value_changed):
+	render_manager.generate_selection_mesh(self)
+
+
+func _on_slider_pos_z_drag_ended(value_changed):
+	render_manager.generate_selection_mesh(self)
+
+func _update_collision_shape():
+	var box_shape := BoxShape3D.new()
+	#var mesh = 
 
 
 func evaluate(x: int, y: int, z: int):
