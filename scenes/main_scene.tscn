@@ -71,7 +71,3 @@ script = ExtResource("4_pu3yx")
 script = ExtResource("5_gubc5")
 voxel_grid = NodePath("../VoxelGrid")
 surfaces = [NodePath("../ImplicitSurface"), NodePath("../ImplicitSurface2"), NodePath("../ImplicitSurface3")]
-
-[node name="SurfaceMesh" type="MeshInstance3D" parent="RenderManager"]
-
-[node name="SelectedMesh" type="MeshInstance3D" parent="RenderManager"]

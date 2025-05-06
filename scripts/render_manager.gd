@@ -6,8 +6,7 @@ var ISO_LEVEL = 0.0
 const TRIANGULATIONS = MarchingCubesData.TRIANGULATIONS
 const POINTS = MarchingCubesData.POINTS
 const EDGES = MarchingCubesData.EDGES
-@onready var surface_mesh = $SurfaceMesh
-@onready var selected_mesh = $SelectedMesh
+var surface_mesh: MeshInstance3D
 @onready var selection_manager : SelectionManager = get_tree().root.get_node("MainScene/SelectionManager")
 @export var voxel_grid: VoxelGrid
 @export var surfaces: Array[ImplicidSurface]
@@ -18,6 +17,7 @@ var hover_material := preload("res://materials/implicid_obj_shadered.tres")
 var default_material := preload("res://materials/implicid_obj.tres")
 
 func _ready():
+	surface_mesh = voxel_grid.surface_mesh
 	for i in surfaces.size():
 		if surfaces[i].is_negative:
 			negative_surfaces.append(i)

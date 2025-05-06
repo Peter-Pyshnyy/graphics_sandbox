@@ -16,6 +16,8 @@ metadata/_custom_type_script = "uid://vxq8ivejd6i3"
 script = ExtResource("2_iyy3w")
 MATERIAL = SubResource("ShaderMaterial_m2ip3")
 
+[node name="surface_mesh" type="MeshInstance3D" parent="."]
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchor_left = 0.802
